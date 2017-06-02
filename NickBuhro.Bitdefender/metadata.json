@@ -1,0 +1,69 @@
+﻿[
+  {
+    "Name": "Accounts",
+    "Methods": [      
+      {
+        "Name": "createAccount"
+      },
+      {
+        "Name": "updateAccount"
+      },
+      {
+        "Name": "deleteAccount"
+      }
+    ]
+  },
+  {
+    "Name": "Companies",
+    "Methods": [
+      {
+        "Name": "createCompany",
+        "Parameters": [
+          {
+            "Name": "type",
+            "Type": "CompanyType"
+          }
+        ]
+      },
+      {
+        "Name": "deleteCompany"
+      },
+      {
+        "Name": "updateCompanyDetails",
+        "Parameters": [
+          {
+            "Name": "type",
+            "Type": "CompanyType"
+          }
+        ]
+      },
+      {
+        "Name": "getCompanyDetails",
+        "ReturnType": "CompanyDetails"
+      },
+      {
+        "Name": "getCompanyDetailsByUser",
+        "ReturnType": "CompanyDetails"
+      },
+      {
+        "Name": "findCompaniesByName",
+        "ReturnType": "CompanyDetails"
+      },
+      {
+        "Name": "suspendCompany"
+      },
+      {
+        "Name": "activateCompany"
+      }
+    ]
+  },
+  {
+    "Name": "Network",
+    "Methods": [
+      {
+        "Name": "getCompaniesList",
+        "ReturnType": "Company[]"
+      }
+    ]
+  }
+]
