@@ -2,8 +2,6 @@
 #      general configuration      #
 #---------------------------------#
 
-version: '{appveyor_repo_tag_name}-{build}'
-
 branches:
   only:
     - master
@@ -26,6 +24,13 @@ cache:
   - '%LocalAppData%\NuGet\Cache'    # NuGet < v3
   - '%LocalAppData%\NuGet\v3-cache' # NuGet v3
 
+init:
+  - ps: |
+        if ($env:APPVEYOR_REPO_TAG -eq "true")
+        {
+            Update-AppveyorBuild -Version "$($env:APPVEYOR_REPO_TAG_NAME.TrimStart("v"))"        
+        }        
+
 #---------------------------------#
 #       build configuration       #
 #---------------------------------#
@@ -41,10 +46,10 @@ build:
 before_build:
   - nuget restore  
   - ps: |
-        $xmlPath = "$env:appveyor_build_folder\NickBuhro.Translit\NickBuhro.Translit.csproj"
+        $xmlPath = "$env:appveyor_build_folder\NickBuhro.Bitdefender\NickBuhro.Bitdefender.csproj"
         $xml = [xml](get-content $xmlPath)
         $propertyGroup = $xml.Project.PropertyGroup[0]
-        $propertyGroup.Version = $env:appveyor_repo_tag_name.Substring(1)
+        $propertyGroup.Version = $env:appveyor_build_version
         $xml.Save($xmlPath)
 
 #---------------------------------#
