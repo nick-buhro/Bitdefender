@@ -10,6 +10,7 @@ EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{839C26C5-BFFF-4356-AC5E-42F6E577C8D0}"
 	ProjectSection(SolutionItems) = preProject
 		.gitignore = .gitignore
+		appveyor.yml = appveyor.yml
 		Bitdefender_ControlCenter_API-Guide_enUS.pdf = Bitdefender_ControlCenter_API-Guide_enUS.pdf
 		LICENSE = LICENSE
 		README.md = README.md
