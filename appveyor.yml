@@ -24,7 +24,7 @@ image: Visual Studio 2017
 
 cache:  
   - '%LocalAppData%\NuGet\Cache'    # NuGet < v3
-  - '%LocalAppData%\NuGet\v3-cache  # NuGet v3
+  - '%LocalAppData%\NuGet\v3-cache' # NuGet v3
 
 #---------------------------------#
 #       build configuration       #
