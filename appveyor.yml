@@ -2,7 +2,7 @@
 #      general configuration      #
 #---------------------------------#
 
-version: {appveyor_repo_tag_name}-{build}
+version: '{appveyor_repo_tag_name}-{build}'
 
 branches:
   only:
