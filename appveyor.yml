@@ -1,0 +1,82 @@
+#---------------------------------#
+#      general configuration      #
+#---------------------------------#
+
+branches:
+  only:
+    - master
+    - develop
+
+skip_non_tags: true
+max_jobs: 1
+
+environment:
+  BITDEFENDER_API_KEY:
+    secure: 838apZyaMjZzA9AaNSnJiKeiVzIRfUw1q78GH8Y7Te5P2QgYZcAZDkPU8scWQdS5
+
+#---------------------------------#
+#    environment configuration    #
+#---------------------------------#
+
+image: Visual Studio 2017
+
+cache:  
+  - '%LocalAppData%\NuGet\Cache'    # NuGet < v3
+  - '%LocalAppData%\NuGet\v3-cache' # NuGet v3
+
+init:
+  - ps: |
+        if ($env:APPVEYOR_REPO_TAG -eq "true")
+        {
+            Update-AppveyorBuild -Version "$($env:APPVEYOR_REPO_TAG_NAME.TrimStart("v"))"        
+        }        
+
+#---------------------------------#
+#       build configuration       #
+#---------------------------------#
+
+platform: Any CPU
+configuration:
+  - Release
+
+build:
+  project: NickBuhro.Bitdefender.sln
+  verbosity: minimal
+
+before_build:
+  - nuget restore  
+  - ps: |
+        $xmlPath = "$env:appveyor_build_folder\NickBuhro.Bitdefender\NickBuhro.Bitdefender.csproj"
+        $xml = [xml](get-content $xmlPath)
+        $propertyGroup = $xml.Project.PropertyGroup[0]
+        $propertyGroup.Version = $env:appveyor_build_version
+        $xml.Save($xmlPath)
+
+#---------------------------------#
+#       tests configuration       #
+#---------------------------------#
+
+
+#---------------------------------#
+#      artifacts configuration    #
+#---------------------------------#
+        
+artifacts:
+
+  - path: NickBuhro.Bitdefender\bin\$(configuration)    
+    type: zip
+
+  - path: NickBuhro.Bitdefender\bin\$(configuration)\*.nupkg
+
+#---------------------------------#
+#     deployment configuration    #
+#---------------------------------#
+
+deploy:
+  provider: NuGet
+  api_key:
+    secure: vDxpqHHdBtz+P6Nau7V8tLYhtc+5tE6qfEoQI8Vrse11k0vWCrAKY1vUvMoLFURB
+  skip_symbols: false
+  artifact: /.*\.nupkg/
+  on:
+    appveyor_repo_tag: true

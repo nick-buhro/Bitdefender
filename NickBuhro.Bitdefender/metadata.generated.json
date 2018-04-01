@@ -1,0 +1,326 @@
+[
+  {
+    "Name": "Accounts",
+    "Paragraph": "2.1.",
+    "Description": "The Accounts API includes several methods allowing the management of user\r\naccounts:\r\n● getAccountsList : lists existing user accounts.\r\n● deleteAccount : deletes a user account.\r\n● createAccount : creates a user account.\r\n● updateAccount : updates a user account.\r\n● configureNotificationsSettings : configures the user notification\r\nsettings.\r\n● getNotificationsSettings : returns the notifications settings.\r\nAPI url: CONTROL_CENTER_APIs_ACCESS_URL/v1.0/jsonrpc/accounts",
+    "Path": "/v1.0/jsonrpc/accounts",
+    "Methods": [
+      {
+        "Name": "createAccount",
+        "Paragraph": "2.1.3.",
+        "Description": "This method creates a user account with password.",
+        "Parameters": [
+          {
+            "Name": "email",
+            "Type": "string",
+            "Optional": false,
+            "Description": "The email address for the new account. profile Object No An object containing profile information: fullName, timezone and language. timezone and language are optional."
+          },
+          {
+            "Name": "password",
+            "Type": "string",
+            "Optional": true,
+            "Description": "The password for the new account. If this value is omitted a password will be created and sent by email to the user. The password should be at least 6 characters in length and must contain at least one digit, one upper case, one lower case and one special character."
+          },
+          {
+            "Name": "companyId",
+            "Type": "string",
+            "Optional": true,
+            "Description": "The company ID used for linking the user account to a specific company. If not specified, the account will be linked to the company that holds the API key."
+          },
+          {
+            "Name": "role",
+            "Type": "int",
+            "Optional": true,
+            "Description": "The role of the new account. The default value is 1 - Company Administrator. These are the available roles: ● 1 - Company Administrator. ● 2 - Network Administrator. ● 3 - Reporter. ● 4 - Partner. ● 5 - Custom. For this role, rights must be specified. rights Object Yes An object containing the rights of a user account. This object should be set only when role parameter has the value 5 - Custom. When set for other roles, the values will be ignored and replaced with the rights specific to that role. The available rights are: ● manageCompanies ● manageNetworks Setting this to true implies manageReports right to true ● manageUsers ● manageReports ● companyManager Each option has two possible values: true, where the user is granted the right, or false otherwise. Omitted values from the request are automatically set to false. targetIds Array Yes A list of IDs representing the targets to be managed by the user account. For more information, refer to the relation between companyId and targetIds."
+          }
+        ],
+        "ReturnType": "string",
+        "ReturnDescription": "The ID of the created user account."
+      },
+      {
+        "Name": "updateAccount",
+        "Paragraph": "2.1.4.",
+        "Description": "This method updates a user account identified through the account ID.",
+        "Parameters": [
+          {
+            "Name": "accountId",
+            "Type": "string",
+            "Optional": false,
+            "Description": "The ID of the user account to be updated."
+          },
+          {
+            "Name": "email",
+            "Type": "string",
+            "Optional": true,
+            "Description": "The email address for the account."
+          },
+          {
+            "Name": "password",
+            "Type": "string",
+            "Optional": true,
+            "Description": "The password for the account.The password should be at least 6 characters in length and must contain at least one digit, one upper case, one lower case and one special character.. profile Object No An object containing profile information: fullName, timezone and language. timezone and language are optional."
+          },
+          {
+            "Name": "role",
+            "Type": "int",
+            "Optional": true,
+            "Description": "The new role of the user. These are the available roles: ● 1 - Company Administrator. ● 2 - Network Administrator. ● 3 - Reporter. ● 4 - Partner. ● 5 - Custom. For this role, rights must be specified. rights Object Yes An object containing the rights of a user account. This object should be set only when role parameter has the value 5 - Custom. When set for other roles, the values will be ignored and replaced with the rights specific to that role. The available rights are: ● manageCompanies ● manageNetworks Setting this to True implies manageReports right to true ● manageUsers ● manageReports ● companyManager Each option has two possible values: true, where the user is granted the right, or false otherwise. Omitted values from the request are automatically set to false. targetIds Array Yes A list of IDs representing the targets to be managed by the user account."
+          }
+        ],
+        "ReturnType": "bool",
+        "ReturnDescription": "True when the user account has been successfully"
+      },
+      {
+        "Name": "deleteAccount",
+        "Paragraph": "2.1.2.",
+        "Description": "This method deletes a user account identified through the account ID.\r\nNote\r\nThe account that was used to create the API key cannot be deleted by using the API.",
+        "Parameters": [
+          {
+            "Name": "accountId",
+            "Type": "string",
+            "Optional": false,
+            "Description": "The ID of the user account to be deleted."
+          }
+        ],
+        "ReturnType": "void",
+        "ReturnDescription": null
+      }
+    ]
+  },
+  {
+    "Name": "Companies",
+    "Paragraph": "2.2.",
+    "Description": "The Companies API includes several methods allowing the management of company\r\naccounts:\r\n● createCompany : adds a new company.\r\n● deleteCompany : deletes a company.\r\n● updateCompanyDetails : updates company information, such as name or\r\ntype.\r\n● getCompanyDetails : retrieves the details of a company.\r\n● getCompanyDetailsByUser : retrieves the details of the company linked to\r\nthe specified user account.\r\n● findCompaniesByName : retrieves all managed companies containing the\r\nspecified string in their name.\r\n● suspendCompany : disables access to Control Center for all user accounts of\r\na company.\r\n● activateCompany : activates a previously suspended company.\r\nAPI url: CONTROL_CENTER_APIs_ACCESS_URL/v1.0/jsonrpc/companies",
+    "Path": "/v1.0/jsonrpc/companies",
+    "Methods": [
+      {
+        "Name": "createCompany",
+        "Paragraph": "2.2.1.",
+        "Description": "This method creates a customer or partner company account.\r\nThe license type for the created company is TRIAL. 'Licensing' api can be used to\r\nchange the license for the new company.",
+        "Parameters": [
+          {
+            "Name": "type",
+            "Type": "CompanyType",
+            "Optional": false,
+            "Description": "The company type. Available values: ● 0 for Partner companies, ● 1 for Customer companies."
+          },
+          {
+            "Name": "name",
+            "Type": "string",
+            "Optional": false,
+            "Description": "The company name. Must be unique."
+          },
+          {
+            "Name": "parentId",
+            "Type": "string",
+            "Optional": true,
+            "Description": "The ID of the parent partner company."
+          },
+          {
+            "Name": "address",
+            "Type": "string",
+            "Optional": true,
+            "Description": "The company's physical address."
+          },
+          {
+            "Name": "phone",
+            "Type": "string",
+            "Optional": true,
+            "Description": "The company's phone number."
+          },
+          {
+            "Name": "canBeManagedByAbove",
+            "Type": "bool",
+            "Optional": true,
+            "Description": "An option defining if the security of the new company can be managed by its Partner company. Available values: true or false. The default value is true."
+          },
+          {
+            "Name": "accountEmail",
+            "Type": "string",
+            "Optional": true,
+            "Description": "The email for the new user account to be linked to the new company. If the parameter canBeManagedByAbove is set to false, the accountEmail parameter must be passed."
+          },
+          {
+            "Name": "accountFullName",
+            "Type": "string",
+            "Optional": true,
+            "Description": "The full name of the new user account to be linked to the new company. This parameter is required when canBeManagedByAbove is set to false."
+          },
+          {
+            "Name": "accountTimezone",
+            "Type": "string",
+            "Optional": true,
+            "Description": "The timezone of the new user account to be linked to the new company. The default value is GMT (UTC)."
+          },
+          {
+            "Name": "accountLanguage",
+            "Type": "string",
+            "Optional": true,
+            "Description": "The user interface language for the new user account to be linked to the new company. The default value is en_US."
+          }
+        ],
+        "ReturnType": "string",
+        "ReturnDescription": "The ID of the newly-created company."
+      },
+      {
+        "Name": "deleteCompany",
+        "Paragraph": "2.2.2.",
+        "Description": "This method deletes a company.",
+        "Parameters": [
+          {
+            "Name": "companyId",
+            "Type": "string",
+            "Optional": false,
+            "Description": "The ID of the company to be deleted"
+          }
+        ],
+        "ReturnType": "void",
+        "ReturnDescription": null
+      },
+      {
+        "Name": "updateCompanyDetails",
+        "Paragraph": "2.2.3.",
+        "Description": "This method updates the details of a partner or customer company.",
+        "Parameters": [
+          {
+            "Name": "id",
+            "Type": "string",
+            "Optional": false,
+            "Description": "The ID of the company to be updated."
+          },
+          {
+            "Name": "type",
+            "Type": "CompanyType",
+            "Optional": true,
+            "Description": "The company type. Available values: ● 0 for Partner companies, ● 1 for Customer companies. If not set, the company type will not be changed."
+          },
+          {
+            "Name": "name",
+            "Type": "string",
+            "Optional": true,
+            "Description": "The company's name. It must be unique. If not set, the company's name will not be changed."
+          },
+          {
+            "Name": "address",
+            "Type": "string",
+            "Optional": true,
+            "Description": "The company's address. If not set, the company's address will not be changed."
+          },
+          {
+            "Name": "phone",
+            "Type": "string",
+            "Optional": true,
+            "Description": "The company's phone number. If not set, the company's phone number will not be changed."
+          }
+        ],
+        "ReturnType": "void",
+        "ReturnDescription": null
+      },
+      {
+        "Name": "getCompanyDetails",
+        "Paragraph": "2.2.4.",
+        "Description": "This method retrieves the details of a company.",
+        "Parameters": [
+          {
+            "Name": "companyId",
+            "Type": "string",
+            "Optional": true,
+            "Description": "The company's ID. The default value is the ID of the company linked to the user who generated the API key."
+          }
+        ],
+        "ReturnType": "CompanyDetails",
+        "ReturnDescription": "This method returns an Object containing the details of the selected company:\r\n● type - the company type: 0 for Partner, 1 for Customer\r\n● name - the name of the company\r\n● id - the ID of the company\r\n● address - the address of the company\r\n● phone - the phone of the company\r\n● canBeManagedByAbove - the security management status for the company:\r\ntrue, if the security can be managed by parent companies\r\n● isSuspended - company account status: true, if the company is suspended"
+      },
+      {
+        "Name": "getCompanyDetailsByUser",
+        "Paragraph": "2.2.5.",
+        "Description": "This method retrieves the details of a company linked to an account identified\r\nthrough the given username and password.",
+        "Parameters": [
+          {
+            "Name": "username",
+            "Type": "string",
+            "Optional": false,
+            "Description": "The username linked to the referred company."
+          },
+          {
+            "Name": "password",
+            "Type": "string",
+            "Optional": false,
+            "Description": "The password linked to the referred company."
+          }
+        ],
+        "ReturnType": "CompanyDetails",
+        "ReturnDescription": "This method returns an Object containing the details of the searched company:\r\n● type - the company type: 0 for Partner, 1 for Customer\r\n● name - the name of the company\r\n● id - the ID of the company\r\n● address - the address of the company\r\n● phone - the phone of the company\r\n● canBeManagedByAbove - the security management status for the company:\r\ntrue, if the security can be managed by parent companies\r\n● isSuspended - company account status: true, if the company is suspended"
+      },
+      {
+        "Name": "findCompaniesByName",
+        "Paragraph": "2.2.6.",
+        "Description": "This method searches for all managed companies containing the specified string\r\nin their name.",
+        "Parameters": [
+          {
+            "Name": "nameFilter",
+            "Type": "string",
+            "Optional": false,
+            "Description": "The string to be searched in the company name. Use the asterisk symbol (*) in front of the keyword to search its appearance anywhere in the name. If omitted, only results where the name starts with the keyword will be returned."
+          }
+        ],
+        "ReturnType": "CompanyDetails",
+        "ReturnDescription": "This method returns an Array containing company objects whose names contain\r\nthe given search criteria. The size of the returned array is limited to 25 entries. Each\r\nentry in the array has the following structure:\r\n● type - the company type: 0 for Partner, 1 for Customer\r\n● name - the name of the company\r\n● id - the ID of the company\r\n● address - the address of the company\r\n● phone - the phone of the company\r\n● canBeManagedByAbove - the security management status for the company:\r\ntrue, if the security can be managed by parent companies\r\n● isSuspended - company account status: true, if the company is suspended"
+      },
+      {
+        "Name": "suspendCompany",
+        "Paragraph": "2.2.7.",
+        "Description": "This method suspends an active company account, with the following implications:\r\n● The company’s users will no longer be able to log in to GravityZone Control\r\nCenter.\r\n● The agents on endpoints directly managed by the suspended company will\r\nexpire.",
+        "Parameters": [
+          {
+            "Name": "companyId",
+            "Type": "string",
+            "Optional": false,
+            "Description": "The ID of the company to be suspended."
+          }
+        ],
+        "ReturnType": "void",
+        "ReturnDescription": null
+      },
+      {
+        "Name": "activateCompany",
+        "Paragraph": "2.2.8.",
+        "Description": "This method activates a suspended company.",
+        "Parameters": [
+          {
+            "Name": "companyId",
+            "Type": "string",
+            "Optional": false,
+            "Description": "The ID of the company to be activated."
+          }
+        ],
+        "ReturnType": "void",
+        "ReturnDescription": null
+      }
+    ]
+  },
+  {
+    "Name": "Network",
+    "Paragraph": "2.4.",
+    "Description": "The Network API allows managing the network structure through the following\r\nmethods:\r\n● getCompaniesList : returns the list of companies under a parent company\r\nor from a company folder.\r\n● getCompanyFoldersList : returns the list of company folders under a\r\ncompany or under a company folder.\r\n● createCompanyFolder : creates a new folder under an existing folder or\r\ncompany.\r\n● deleteCompanyFolder : deletes a company folder.\r\n● moveCompanyOrCompanyFolder : moves a company or company folder\r\nunder a parent company or company folder.\r\n● getEndpointsList : returns the list of endpoints under the specified company\r\nor group.\r\n● getManagedEndpointDetails : returns the properties of the specified\r\nendpoint.\r\n● createCustomGroup : creates a new group under an existing one or under\r\na company's Computers and Groups.\r\n● deleteCustomGroup : deletes a custom group.\r\n● getCustomGroupsList : retrieves the list of groups under a specified group.\r\n● moveEndpoints : moves the specified list of endpoints to a custom group.\r\n● deleteEndpoint : deletes a specified endpoint.\r\n● moveCustomGroup : moves a custom group under another custom group.\r\n● getRootContainers : returns the root containers for a company. Available\r\nroot containers include Companies, Network, Computers and Groups, Deleted.\r\n● createScanTask : launches a scan task on the specified endpoints or groups.\r\nThe available scan types are: Quick Scan, Full Scan and Memory Scan.\r\n● getScanTasksList : returns the list of scan tasks.\r\nAPI url: CONTROL_CENTER_APIs_ACCESS_URL/v1.0/jsonrpc/network",
+    "Path": "/v1.0/jsonrpc/network",
+    "Methods": [
+      {
+        "Name": "getCompaniesList",
+        "Paragraph": "2.4.1.",
+        "Description": "This method returns the list of companies under a parent company or from a\r\ncompany folder.",
+        "Parameters": [
+          {
+            "Name": "parentId",
+            "Type": "string",
+            "Optional": true,
+            "Description": "The parent company's ID or the company folder's ID. The default value is the ID of the parent company."
+          }
+        ],
+        "ReturnType": "Company[]",
+        "ReturnDescription": "This method returns an Array containing the list of companies located under the\r\nparent company. Each entry in the list has the following fields:\r\n● id - the ID of the company\r\n● name - the name of the company"
+      }
+    ]
+  }
+]
