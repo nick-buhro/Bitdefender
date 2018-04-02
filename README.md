@@ -1,5 +1,8 @@
 # Bitdefender
 
+[![License](https://img.shields.io/badge/license-MIT-red.svg)](https://raw.githubusercontent.com/nick-buhro/Translit/master/LICENSE)
+[![Build status](https://ci.appveyor.com/api/projects/status/a88n7x5g7u43fh0i/branch/master?svg=true)](https://ci.appveyor.com/project/nick-buhro/bitdefender/branch/master)
+
 C# client library for Bitdefender Control Center API.
 
 This project was a part of internal research that was closed. So this library is **unsupported**. You can use it as-is for what-you-want.
