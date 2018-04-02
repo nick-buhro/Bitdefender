@@ -1,6 +1,7 @@
 # Bitdefender
 
 [![License](https://img.shields.io/badge/license-MIT-red.svg)](https://raw.githubusercontent.com/nick-buhro/Translit/master/LICENSE)
+[![NuGet Badge](https://buildstats.info/nuget/NickBuhro.Bitdefender?includePreReleases=true)](https://www.nuget.org/packages/NickBuhro.Bitdefender/)
 [![Build status](https://ci.appveyor.com/api/projects/status/a88n7x5g7u43fh0i/branch/master?svg=true)](https://ci.appveyor.com/project/nick-buhro/bitdefender/branch/master)
 
 C# client library for Bitdefender Control Center API.
